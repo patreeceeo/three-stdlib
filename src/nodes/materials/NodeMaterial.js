@@ -5,20 +5,18 @@ import { ColorNode } from '../inputs/ColorNode'
 import { PositionNode } from '../accessors/PositionNode'
 import { RawNode } from './nodes/RawNode'
 
-function NodeMaterial(vertex, fragment) {
-  ShaderMaterial.call(this)
+class NodeMaterial extends ShaderMaterial {
+  constructor (vertex, fragment) {
+    super(this)
 
-  this.vertex = vertex || new RawNode(new PositionNode(PositionNode.PROJECTION))
-  this.fragment = fragment || new RawNode(new ColorNode(0xff0000))
+    this.vertex = vertex || new RawNode(new PositionNode(PositionNode.PROJECTION))
+    this.fragment = fragment || new RawNode(new ColorNode(0xff0000))
 
-  this.updaters = []
+    this.updaters = []
+  }
+  isNodeMaterial = true
+  type = 'NodeMaterial'
 }
-
-NodeMaterial.prototype = Object.create(ShaderMaterial.prototype)
-NodeMaterial.prototype.constructor = NodeMaterial
-NodeMaterial.prototype.type = 'NodeMaterial'
-
-NodeMaterial.prototype.isNodeMaterial = true
 
 Object.defineProperties(NodeMaterial.prototype, {
   properties: {
